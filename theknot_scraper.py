@@ -229,7 +229,7 @@ async def main():
     print("THE KNOT SCRAPER")
     print("=" * 50)
 
-    scraper = TheKnotScraper(headless=False)
+    scraper = TheKnotScraper(headless=True)
 
     venues = await scraper.scrape()
 
