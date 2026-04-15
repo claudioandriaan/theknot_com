@@ -60,11 +60,9 @@ class TheKnotScraper:
             name = name.strip()
             
             # Extract location
-            location_elem = await card.query_selector('.location-text--mp-OjSGe')
-            if not location_elem:
-                location_elem = await card.query_selector('.sr-only--mp-AmxKv')
+            location_elem = await card.query_selector('.location-text--mp-OjSGe')            
             location = await location_elem.inner_text() if location_elem else "N/A"
-            location = location.strip()
+            location = location.replace("\n", ", ").strip()
             
             # Extract price
             price_elem = await card.query_selector('starting-price--mp-zV6P4')
@@ -75,11 +73,9 @@ class TheKnotScraper:
             
             # Extract capacity
             capacity_elem = await card.query_selector('.secondary-info-content--mp-ssSzU')
-            if capacity_elem:
-                capacity_text = await capacity_elem.inner_text()
-            else:
-                pass
-            capacity = capacity_text.split("Guests")[0].strip() if isinstance(capacity_text, str) else "N/A"
+            capacity_text = await capacity_elem.inner_text()
+            capacity = capacity_text.split("Guests")[0]
+            capacity = capacity.strip() + ' guests' if capacity else "N/A"
             
             # Extract rating
             rating_elem = await card.query_selector('.star-count--mp-YhpiM')           
@@ -229,7 +225,7 @@ async def main():
     print("THE KNOT SCRAPER")
     print("=" * 50)
 
-    scraper = TheKnotScraper(headless=True)
+    scraper = TheKnotScraper(headless=False)
 
     venues = await scraper.scrape()
 
