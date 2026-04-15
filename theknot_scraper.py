@@ -170,7 +170,7 @@ class TheKnotScraper:
                             venues.append(venue)
 
                     #  CHECK NEXT BUTTON
-                    next_button = await page.query_selector('a[aria-label="Go to next "]')
+                    next_button = await page.query_selector('a[aria-label="Go to next page"]')
 
                     if not next_button:
                         print("No more pages → finished")
